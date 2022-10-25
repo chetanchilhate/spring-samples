@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,9 +34,10 @@ public class HttpServiceApplication {
   }
 
   @Bean
-  TodoClient todoClient() {
+  @ConditionalOnProperty(value = "todo.base-url")
+  TodoClient todoClient(TodoProps props) {
 
-    var webClient = WebClient.builder().baseUrl("https://jsonplaceholder.typicode.com").build();
+    var webClient = WebClient.builder().baseUrl(props.baseUrl()).build();
 
     var factory = HttpServiceProxyFactory.builder().clientAdapter(WebClientAdapter.forClient(webClient)).build();
 
@@ -42,6 +45,7 @@ public class HttpServiceApplication {
   }
 
   @Bean
+  @ConditionalOnBean(TodoClient.class)
   ApplicationRunner applicationRunner(TodoClient todoClient) {
     return args -> {
       log.info(todoClient.todos().toString());
@@ -66,5 +70,4 @@ interface TodoClient {
 
 }
 
-record Todo(Long id, String title, boolean completed, Long userId) {
-}
+record Todo(Long id, String title, boolean completed, Long userId) {}
