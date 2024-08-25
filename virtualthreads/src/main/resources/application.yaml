@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: virtualthreads
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: 8090
+  tomcat:
+    threads:
+      max: 10

@@ -1,0 +1,1 @@
+![Cost of Platform Thread.png](img.png)
