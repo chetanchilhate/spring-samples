@@ -1,12 +1,15 @@
 spring:
   application:
     name: virtualthreads
+  main:
+    banner-mode: "off"
   threads:
     virtual:
       enabled: true
 
 server:
   port: 8090
+  shutdown: graceful
   tomcat:
     threads:
       max: 10
