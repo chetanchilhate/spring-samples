@@ -1,4 +1,6 @@
-# Cost of platform thread
+# Virtual Threads
+
+## Cost of platform thread
 
 ![Cost of Platform Thread.png](img/img.png)
 
@@ -23,57 +25,57 @@
 
 ---
 
-# Performance without virtual threads
+## Performance without virtual threads
 
-## Rest Client
+### Rest Client
 
 ![img_1.png](img/img_1.png)
 
-## Reactive
+### Reactive
 
 ![img_2.png](img/img_2.png)
 
-## Reactive Block
+### Reactive Block
 
 ![img_3.png](img/img_3.png)
 
-## Multi Call Rest Client
+### Multi Call Rest Client
 
 ![img_4.png](img/img_4.png)
 
-## Multi Call Reactive
+### Multi Call Reactive
 
 ![img_5.png](img/img_5.png)
 
-## Multi Call Reactive Block
+### Multi Call Reactive Block
 
 ![img_6.png](img/img_6.png)
 
 ---
 
-# Performance with virtual threads
+## Performance with virtual threads
 
-## Rest Client Virtual
+### Rest Client Virtual
 
 ![img_7.png](img/img_7.png)
 
-## Reactive Virtual
+### Reactive Virtual
 
 ![img_8.png](img/img_8.png)
 
-## Reactive Block Virtual
+### Reactive Block Virtual
 
 ![img_9.png](img/img_9.png)
 
-## Multi Call Rest Client Virtual
+### Multi Call Rest Client Virtual
 
 ![img_10.png](img/img_10.png)
 
 
-## Multi Call Reactive Virtual
+### Multi Call Reactive Virtual
 
 ![img_11.png](img/img_11.png)
 
-## Multi Call Reactive Block Virtual
+### Multi Call Reactive Block Virtual
 
 ![img_12.png](img/img_12.png)
