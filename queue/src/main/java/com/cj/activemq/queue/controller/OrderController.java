@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/orders")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class OrderController {
 
   private final OrderProducer orderProducer;
@@ -66,7 +68,7 @@ public class OrderController {
 
   @GetMapping("/received")
   public List<Order> getReceivedOrders() {
-    return OrderListener.RECEIVED_ORDERS;
+    return OrderListener.RECEIVED_ORDERS.reversed().stream().distinct().toList();
   }
 
 }

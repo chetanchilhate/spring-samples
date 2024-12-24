@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"order", "priority"})
 public class Order {
 
   private static final Gson GSON = new Gson();
@@ -21,6 +21,8 @@ public class Order {
   private String customer;
   private long volume;
   private double value;
+  private int order;
+  private int priority;
 
   public static Order fromJson(String json) {
     return GSON.fromJson(json, Order.class);
@@ -31,11 +33,31 @@ public class Order {
       throw new RuntimeException("invalid message");
     }
     try {
-      return fromJson(textMessage.getText());
+      var order = fromJson(textMessage.getText());
+      order.setPriority(message.getJMSPriority());
+      return order;
     } catch (JMSException ex) {
       log.warn("caused by : {}", ex.getMessage());
       throw new RuntimeException("invalid message");
     }
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Order order = (Order) o;
+
+    return id.equals(order.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
 }

@@ -1,25 +1,37 @@
 package com.cj.activemq.queue.config;
 
-import lombok.AllArgsConstructor;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-@AllArgsConstructor
 public class RestClientConfig {
 
-  private final JolokiaConfig jolokiaConfig;
+  private final String jolokiaEndpoint;
+  private final ActiveMQProperties activeMQProperties;
+
+  public RestClientConfig(@Value("${jolokia.endpoint}") String jolokiaEndpoint, ActiveMQProperties activeMQProperties) {
+    this.jolokiaEndpoint = jolokiaEndpoint;
+    this.activeMQProperties = activeMQProperties;
+  }
 
   @Bean
   public RestClient jolokiaRestClient() {
+    var authorization = activeMQProperties.getUser() + ":" + activeMQProperties.getPassword();
+    var encodedAuthorization = "Basic " + Base64.getEncoder().encodeToString(authorization.getBytes(StandardCharsets.UTF_8));
+
     return RestClient.builder()
-        .baseUrl(jolokiaConfig.getEndpoint())
-        .defaultHeader(HttpHeaders.ORIGIN, jolokiaConfig.getEndpoint())
-        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        .defaultHeader(HttpHeaders.AUTHORIZATION, jolokiaConfig.getAuthorization())
+        .baseUrl(jolokiaEndpoint)
+        .defaultHeader(HttpHeaders.ORIGIN, jolokiaEndpoint)
+        .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+        .defaultHeader(HttpHeaders.AUTHORIZATION, encodedAuthorization)
         .build();
   }
 

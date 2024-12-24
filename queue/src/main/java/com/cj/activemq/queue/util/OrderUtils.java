@@ -18,7 +18,9 @@ public class OrderUtils {
     var randomFullNames = generateRandomFullNames(random);
     var orders = new ArrayList<Order>();
     for (int i = 0; i < count; i++) {
-      orders.add(generateRandomOrder(random, randomFullNames));
+      var generatedOrder = generateRandomOrder(random, randomFullNames);
+      generatedOrder.setOrder(i + 1);
+      orders.add(generatedOrder);
     }
     return orders;
   }

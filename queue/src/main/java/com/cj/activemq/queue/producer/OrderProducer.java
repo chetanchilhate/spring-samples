@@ -45,7 +45,8 @@ public class OrderProducer {
       var session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       var queue = session.createQueue(destination);
       var producer = session.createProducer(queue);
-      producer.send(message, DeliveryMode.PERSISTENT, 9, 0);
+      var oneHourTtl = 1000L * 3600L;
+      producer.send(message, DeliveryMode.PERSISTENT, 9, oneHourTtl);
       log.info("Producer> Message Sent On Priority");
     } catch (JMSException e) {
       throw new RuntimeException("Failed to send message", e);
