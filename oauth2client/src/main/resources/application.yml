@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: RedisOAuth2AuthorizedClientService
+  security:
+    oauth2:
+      client:
+        registration:
+          wso2:
+            client-id: ${WSO2_CLEINT_ID:}
+            client-secret: ${WSO2_CLIENT_SECRET:}
+            authorization-grant-type: client_credentials
+        provider:
+          wso2:
+            token-uri: https://${WSO2_HOSTNAME}/token
+
+api:
+  smart-price:
+    endpoint: https://${WSO2_HOSTNAME}/revenue/pricing/v1/smartprice/orderwebprice?customerNumber={customer}&productNumbers={material}
