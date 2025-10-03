@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: chat
+  ai:
+    openai:
+      api-key: "local-key"
+      base-url: http://localhost:12434/engines/llama.cpp
+      chat:
+        options:
+          model: "ai/gemma3:latest"
+          max-tokens: 150
+server:
+  port: 8082
+
+logging:
+  level:
+    root: info
