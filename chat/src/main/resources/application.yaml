@@ -2,13 +2,11 @@ spring:
   application:
     name: chat
   ai:
-    openai:
-      api-key: "local-key"
-      base-url: http://localhost:12434/engines/llama.cpp
-      chat:
-        options:
-          model: "ai/gemma3:latest"
-          max-tokens: 150
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-flash-latest
 server:
   port: 8082
 
